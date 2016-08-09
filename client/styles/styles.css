@@ -87,4 +87,18 @@ form input[type=text] {
     color: #fff;
     background-color: #0090da;
 }
+.message {
+    text-align: left;
+    padding: 5px;
+}
+#hack {
+    font-size: 30px;
+    color: red;
+    font-weight: 900;
 
+    width: 100px;
+    height: 100px;
+    background-position: center;
+    background-size: 100px 100px;
+    background-image: url(http://www.spyderonlines.com/images/wallpapers/radioactive/radioactive-19.png);
+}
