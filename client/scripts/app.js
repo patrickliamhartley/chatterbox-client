@@ -1,24 +1,18 @@
-$(document).ready(function() {
+// $(document).ready(function() {
 
-});
+// });
 
 var app = {};
 var dataStore = [];
+// var username
 var dataPull = function(data) { 
-  for (var i = 0; i < 10; i ++) {
-    dataStore.push(data.results[i]);
+  //zero out data store so it doesnt reprint old messages
+  dataStore = [];
+  for (var i = 0; i < 100; i ++) {
+    if (data.results[i].username !== undefined || data.results[i].text !== undefined) {
+      dataStore.push(data.results[i]);
+    }
   }
-};
-
-
-
-app.init = function() {
-  console.log(this);
-  this.fetch();
-  for (var j = 0; j < dataStore.length ; j ++) {
-    $('#chats').append('<div>' + dataStore[j].username + '</div>');
-  }
-
 };
 
 
@@ -44,7 +38,6 @@ app.fetch = function () {
     success: function (data) {
       dataPull(data);
     }
-   
     // success: function (data) {
     //   console.log(data);
     // },
@@ -55,11 +48,19 @@ app.fetch = function () {
 };
 
 app.clearMessages = function () {
-  $('#chats').empty();
+  $('.message').empty();
 };
 
+
 app.addMessage = function (message) {
-  $('#chats').append('<div>' + message + '</div>');
+  var messageObj = {
+    username: myname,
+    text: message,
+    roomname: "lobby"
+  };
+
+  this.send(messageObj);
+  // $('#chats').append('<div>' + message + '</div>');
 };
 
 app.addRoom = function (roomName) {
@@ -70,7 +71,52 @@ app.addRoom = function (roomName) {
 app.addFriend = function () {
   $('.username').on('click', function () {
     console.log('username clicked');
-
   });
 };
+
+app.init = function() {
+  //clear page of old messages
+  this.clearMessages();
+
+  this.fetch();
+  var rooms = {};
+
+  
+  $('select').empty();
+  for (var j = 0; j < 20; j ++) {
+    $('#chats').append('<div class=message><h2>' + dataStore[j].username + 
+      '</h2>: ' + dataStore[j].text + '</div>');
+    rooms[dataStore[j]] = dataStore[j].roomname;
+  }
+
+  for (var key in rooms) {
+    $('select').append('<option value="rooms[key]">' + rooms[key] + '</option>');
+
+  }
+
+
+
+};
+
+$('form').submit( function (event) {
+  app.addMessage($("input").val());
+
+});  
+
+var myname = prompt('What is your name?');
+//call init every 2 seconds to update chat
+$(document).ready(function() {
+ 
+   
+  
+  setInterval( function() {
+    
+
+    app.init();
+
+
+  }, 2000);
+});
+
+// debugger;
 
