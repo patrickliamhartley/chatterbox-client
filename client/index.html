@@ -17,9 +17,10 @@
       <h1>chatterbox</h1>
       <!-- Your HTML goes here! -->
     </div>
-    <div id="roomSelect">rooms</div>
+    <div id="roomSelect">rooms
       <select id="dropdown">
       </select>
+    </div>
     <button id="hack">Hack</button>
     <div id="friends">friends</div>
     <form id="sendChat">
@@ -28,6 +29,10 @@
     </form>
       <!-- <div class="username">username</div> -->
     <div id="chats">chats</div>
-
+    <script>
+      $(function() {
+        app.init();
+      });
+    </script> 
   </body>
 </html>
